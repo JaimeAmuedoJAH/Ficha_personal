@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ficha_personal</string>
+    <string name="btnName">Prénom</string>
+    <string name="btnCourse">Cours</string>
+    <string name="btnLanguage">Langages</string>
+    <string name="btnRegistration">NOUVELLE INSCRIPTION</string>
+    <string name="btnInscription">Nouvelle inscription</string>
+    <string name="btnInscriptionText">Voulez-vous créer un nouvel enregistrement ?</string>
+    <string name="btnInscriptionYes">Oui</string>
+    <string name="btnInscriptionNo">Non</string>
+    <string name="btnNombreDialog">Entrez les données</string>
+    <string name="btnNombreDialogText">Prénom</string>
+    <string name="btnCourseDialog">Sélectionnez un cours</string>
+    <string name="btnDialogNeutral">Nettoie tout</string>
+    <string name="btnDialogNegative">Annuler</string>
+    <string name="btnDialogPositive">Accepter</string>
+    <string name="btnLanguageTitle">Sélectionnez les langues</string>
+</resources>

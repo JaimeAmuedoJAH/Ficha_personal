@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name" translatable="false">Ficha_personal</string>
+    <string name="btnName">Name</string>
+    <string name="btnCourse">Course</string>
+    <string name="btnLanguage">Languages</string>
+    <string name="btnRegistration">NEW REGISTRATION</string>
+    <string name="btnInscription">New inscription</string>
+    <string name="btnInscriptionText">Do you want to create a new registration?</string>
+    <string name="btnInscriptionYes">Yes</string>
+    <string name="btnInscriptionNo">No</string>
+    <string name="btnNombreDialog">Enter data</string>
+    <string name="btnNombreDialogText">Name</string>
+    <string name="btnDialogPositive">Accept</string>
+    <string name="btnDialogNegative">Cancel</string>
+    <string name="btnDialogNeutral">Clear all</string>
+    <string name="btnCourseDialog">Select course</string>
+    <string name="btnCourseDialogButtons1" translatable="false">DAM</string>
+    <string name="btnCourseDialogButtons2" translatable="false">DAW</string>
+    <string name="btnCourseDialogButtons3" translatable="false">ASIR</string>
+    <string name="btnLanguageDialogcb1" translatable="false">Java</string>
+    <string name="btnLanguageDialogcb2" translatable="false">JavaScript</string>
+    <string name="btnLanguageDialogcb3" translatable="false">C#</string>
+    <string name="btnLanguageDialogcb4" translatable="false">Kotlin</string>
+    <string name="btnLanguageDialogcb5" translatable="false">Python</string>
+    <string name="btnLanguageTitle">Select languages</string>
+</resources>

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
     Button btnNewReg, btnName, btnCourse, btnLanguages;
     TextView lblName, lblCourse, lblLanguages;
     AlertDialog.Builder dialog;
+    String java;
+    String javaScript;
+    String cSharp;
+    String kotlin;
+    String python;
+
+    String[] listItems;
+    boolean[] checkedItems;
+    String[] listCourse;
+    int[] checked;
 
 
     @Override
@@ -38,61 +49,81 @@ public class MainActivity extends AppCompatActivity {
         lblCourse = findViewById(R.id.lblCourse);
         lblLanguages = findViewById(R.id.lblLanguages);
 
+        java = getString(R.string.btnLanguageDialogcb1);
+        javaScript = getString(R.string.btnLanguageDialogcb2);
+        cSharp = getString(R.string.btnLanguageDialogcb3);
+        kotlin = getString(R.string.btnLanguageDialogcb4);
+        python = getString(R.string.btnLanguageDialogcb5);
+        listItems = new String[] {java, javaScript, cSharp, kotlin, python};
+        checkedItems = new boolean[listItems.length];
+
+        String DAM = getString(R.string.btnCourseDialogButtons1);
+        String DAW = getString(R.string.btnCourseDialogButtons2);
+        String ASIR = getString(R.string.btnCourseDialogButtons3);
+        listCourse = new String[]{DAM, DAW, ASIR};
+        checked = new int[]{-1};
+
         btnNewReg.setOnClickListener(view -> createDialogReg());
         btnName.setOnClickListener(view -> createDialogName());
         btnCourse.setOnClickListener(view -> createDialogCourse());
         btnLanguages.setOnClickListener(view -> createDialogLanguages());
 
+        if (savedInstanceState != null) {
+            String name = savedInstanceState.getString(getString(R.string.btnName));
+            String course = savedInstanceState.getString(getString(R.string.btnCourse));
+            String languages = savedInstanceState.getString(getString(R.string.btnLanguage));
+
+            lblName.setText(name);
+            lblCourse.setText(course);
+            lblLanguages.setText(languages);
+            checkedItems = savedInstanceState.getBooleanArray("checkedItems");
+            listCourse = savedInstanceState.getStringArray("listCourse");
+            checked = savedInstanceState.getIntArray("checked");
+        }
+
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(getString(R.string.btnName), lblName.getText().toString());
+        outState.putString(getString(R.string.btnCourse), lblCourse.getText().toString());
+        outState.putString(getString(R.string.btnLanguage), lblLanguages.getText().toString());
+
+        outState.putBooleanArray("checkedItems", checkedItems);
+        outState.putStringArray("listCourse", listCourse);
+        outState.putIntArray("checked", checked);
     }
 
     private void createDialogLanguages() {
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
 
-        CheckBox cbJava = new CheckBox(this);
-        cbJava.setText(R.string.btnLanguageDialogcb1);
-        CheckBox cbJS = new CheckBox(this);
-        cbJS.setText(R.string.btnLanguageDialogcb2);
-        CheckBox cbCSharp = new CheckBox(this);
-        cbCSharp.setText(R.string.btnLanguageDialogcb3);
-        CheckBox cbKotlin = new CheckBox(this);
-        cbKotlin.setText(R.string.btnLanguageDialogcb4);
-        CheckBox cbPhyton = new CheckBox(this);
-        cbPhyton.setText(R.string.btnLanguageDialogcb5);
-
-
-        layout.addView(cbJava);
-        layout.addView(cbJS);
-        layout.addView(cbCSharp);
-        layout.addView(cbKotlin);
-        layout.addView(cbPhyton);
         dialog = new AlertDialog.Builder(this);
 
         dialog.setCancelable(false)
                 .setIcon(R.drawable.ic_launcher_foreground)
                 .setTitle(R.string.btnLanguage)
-                .setView(layout)
-                .setNeutralButton(R.string.btnDialogNeutral, (dialogInterface, i) -> {
-                    cbJava.setChecked(false);
-                    cbJS.setChecked(false);
-                    cbCSharp.setChecked(false);
-                    cbKotlin.setChecked(false);
-                    cbPhyton.setChecked(false);
+                .setMultiChoiceItems(listItems, checkedItems, (dialog, which, isChecked) -> {
+                    checkedItems[which] = isChecked;
                 })
-                .setNegativeButton(R.string.btnDialogNegative, null)
+                .setNeutralButton(R.string.btnDialogNeutral, (dialogInterface, i) -> {
+                    Arrays.fill(checkedItems, false);
+                    lblLanguages.setText("");
+                })
+                .setNegativeButton(R.string.btnDialogNegative, (dialogInterface, i) -> {
+                    for(int ind = 0;ind < checkedItems.length;ind++){
+                        if(lblLanguages.getText().toString().contains(listItems[ind]))
+                            checkedItems[ind] = true;
+                        else
+                            checkedItems[ind] = false;
+                    }
+                })
                 .setPositiveButton(R.string.btnDialogPositive, (dialogInterface, i) -> {
                     String str = "";
-                    if(cbJava.isChecked())
-                        str += cbJava.getText().toString() + "\n";
-                    if(cbJS.isChecked())
-                        str += cbJS.getText().toString() + "\n";
-                    if(cbCSharp.isChecked())
-                        str += cbCSharp.getText().toString() + "\n";
-                    if(cbKotlin.isChecked())
-                        str += cbKotlin.getText().toString() + "\n";
-                    if(cbPhyton.isChecked())
-                        str += cbPhyton.getText().toString() + "\n";
-
+                    for (int ind = 0; ind < checkedItems.length; ind++) {
+                        if (checkedItems[ind]) {
+                            str += listItems[ind] + "\n";
+                        }
+                    }
                     lblLanguages.setText(str);
                 })
                 .create()
@@ -100,30 +131,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createDialogCourse() {
-        RadioGroup rgCourse = new RadioGroup(this);
-        RadioButton rbDAM = new RadioButton(this);
-        rbDAM.setText(R.string.btnCourseDialogButtons1);
-        RadioButton rbDAW= new RadioButton(this);
-        rbDAW.setText(R.string.btnCourseDialogButtons2);
-        RadioButton rbASIR = new RadioButton(this);
-        rbASIR.setText(R.string.btnCourseDialogButtons3);
-
-        rgCourse.addView(rbDAM);
-        rgCourse.addView(rbDAW);
-        rgCourse.addView(rbASIR);
-
         dialog = new AlertDialog.Builder(this);
 
         dialog.setCancelable(false)
                 .setIcon(R.drawable.ic_launcher_foreground)
                 .setTitle(R.string.btnCourseDialog)
-                .setView(rgCourse)
+                .setSingleChoiceItems(listCourse, checked[0], (dialog, which) -> {
+                    checked[0] = which;
+                })
                 .setNegativeButton(R.string.btnDialogNegative, null)
                 .setPositiveButton(R.string.btnDialogPositive, (dialogInterface, i) -> {
-                    int selectedId = rgCourse.getCheckedRadioButtonId();
-                    RadioButton selected = rgCourse.findViewById(selectedId);
 
-                    String selectedText = selected.getText().toString();
+                    String selectedText = listCourse[checked[0]];
                     lblCourse.setText(selectedText);
                 })
                 .create()
